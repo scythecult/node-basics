@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{pageTitle}
+    link(rel="stylesheet", href="/css/styles.css")
+
+  body
+    header.header
+      nav.nav
+        a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Home
+        a(class=(activePath === '/add-product' ? 'active' : '') href="/admin/add-product", target="_self", rel="noopener noreferrer").nav__link Admin
+        if cartProducts && cartProducts.length
+          a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link.nav__link--cart Cart
+            span.cart-count #{cartProducts.length}
+        else
+          a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link Cart
+  main.main-layout
+    block pageContent
+  footer.footer fancyshop.com
+  block pageScript

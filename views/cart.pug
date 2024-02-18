@@ -1,0 +1,8 @@
+extends layouts/main.pug
+
+block pageContent
+    if cartProducts.length
+      p Cart products list: #{cartProducts.length}
+    else
+      p Cart is empty...
+      a.button(href="/", target="_self", rel="noopener noreferrer") Go to main

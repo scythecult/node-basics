@@ -1,0 +1,7 @@
+extends layouts/main.pug
+
+block pageContent
+    if productTitle
+      h2 Product page: #{productTitle}
+    else
+      h2 There is no such product in out shop!
