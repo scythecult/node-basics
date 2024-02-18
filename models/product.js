@@ -25,6 +25,22 @@ class ProductService {
     return AppState.getAll();
   }
 
+  addToCart(productId = '') {
+    const allProducts = AppState.getAll();
+
+    if (allProducts.length) {
+      const targetProduct = allProducts.find((product) => product.id === productId);
+
+      if (targetProduct) {
+        this.cartProducts.push(targetProduct);
+
+        return this.cartProducts;
+      }
+    }
+
+    return null;
+  }
+
   createPending(newProduct = {}) {
     this.pendingProducts.push(newProduct);
   }

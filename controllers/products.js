@@ -1,5 +1,4 @@
 import { ProductService } from '../models/product.js';
-import { AppState } from '../state/state.js';
 import { AppCodes, AppRoute } from '../utils.js';
 
 const productService = new ProductService();
@@ -96,16 +95,12 @@ const getCartProduct = (req, res) => {
 
 const postCartProduct = (req, res) => {
   const { productId = '' } = req.body;
-  const targetProduct = Product.getById(productId);
 
-  // if (targetProduct) {
-  //   cartProducts: AppState.cartProducts.push(targetProduct);
-  //   res.status(AppCodes.SUCCESS).json({ status: 'product cart was updated', productId });
+  const isProductAdded = productService.addToCart(productId);
 
-  //   return;
-  // }
-
-  // res.status(AppCodes.SUCCESS).json({ status: 'Product doesnt exists!' });
+  if (isProductAdded) {
+    res.status(AppCodes.SUCCESS).json({ status: 'product cart was updated', productId });
+  }
 };
 
 export {
