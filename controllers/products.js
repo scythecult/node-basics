@@ -1,9 +1,10 @@
-import { ProductService } from '../models/product.js';
+import { ProductService } from '../services/product-service.js';
 import { AppCodes, AppRoute } from '../utils.js';
+import { Product } from '../models/product.js';
 
 const productService = new ProductService();
 
-const getRootProducts = (req, res) => {
+const getRootProducts = async (req, res) => {
   const { path } = req;
   // передаёт в ответе файл html, по определённому пути ФС
   // res.sendFile('shop.html', { root: './views' });
@@ -12,10 +13,12 @@ const getRootProducts = (req, res) => {
   // вторым аргументом передаём объект с данными, которые будут доступны в шаблоне
   // по соотв. названиям полей
   // !это дефолтный флоу работы с шаблонами
+  const products = await productService.getAll();
+
   res.render('shop', {
     pageTitle: 'Fancy Shop',
     activePath: AppRoute.ROOT,
-    products: productService.getAll(),
+    products,
     cartProducts: productService.getCartProducts(),
   });
 };
@@ -33,7 +36,7 @@ const getAdminAddProduct = (req, res) => {
 const postAdminPendingProduct = (req, res, next) => {
   const newProduct = req.body;
 
-  productService.createPending(newProduct);
+  productService.createPending(new Product(newProduct));
 
   // products.push(req.body);
   // res.status(200).sendFile('product.html', { root: './views' });

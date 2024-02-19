@@ -9,6 +9,10 @@ export const HeaderType = {
   LOCATION: 'Location',
 };
 
+export const FSPath = {
+  STORED: './stored',
+};
+
 export const AppRoute = {
   ROOT: '/',
   PRODUCT_ID: '/:id',

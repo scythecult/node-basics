@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# stored files
+/stored
+
 # editors
 .idea
 *.sublime*
