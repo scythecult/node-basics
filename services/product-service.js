@@ -45,12 +45,12 @@ class ProductService {
     this.pendingProducts.push(newProduct);
   }
 
-  applyPending(productIds = []) {
+  async applyPending(productIds = []) {
     const appliedProducts = this.pendingProducts.filter((product) => productIds.includes(product.id));
     AppState.create(appliedProducts);
     this.clearPending();
 
-    return AppState.getAll();
+    return await AppState.getAll();
   }
 
   clearPending() {

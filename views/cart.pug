@@ -1,8 +1,21 @@
 extends layouts/main.pug
 
 block pageContent
-    if cartProducts.length
-      p Cart products list: #{cartProducts.length}
+    h2 Cart
+    if cartProducts.length > 0
+      .cart-container
+        .products__container.products__container--cart.js-products-container
+           each product in cartProducts
+            if product.title
+              .product.product--cart
+                 h3.product__title #{product.title}
+                 a(href=`/product/${product.id}`, target="_self", rel="noopener noreferrer").product__image
+                  img(src="https://placehold.co/160x160", alt=`${product.title}`)
+                 p.product__price $15.99
+                 p.product__desc Very interesting book...
+                 button.product__remove-from-list.js-remove-from-list(data-product-id=`${product.id}`) Remove
+
+        .cart-info Total price: #{cartProducts.length}
     else
       p Cart is empty...
       a.button(href="/", target="_self", rel="noopener noreferrer") Go to main

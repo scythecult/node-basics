@@ -49,10 +49,10 @@ const postAdminPendingProduct = (req, res, next) => {
   });
 };
 
-const postAdminAddProducts = (req, res) => {
+const postAdminAddProducts = async (req, res) => {
   const { productIds } = req.body;
 
-  productService.applyPending(productIds);
+  await productService.applyPending(productIds);
 
   res.status(AppCodes.SUCCESS).render('admin', {
     pageTitle: 'Admin Page',

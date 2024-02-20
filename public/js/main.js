@@ -9,8 +9,8 @@ const getProductIds = () => {
   return products.length ? [...products].map((product) => product.dataset.productId) : [];
 };
 
-if (addProductsButton) {
-  addProductsButton.addEventListener('click', async () => {
+const init = () => {
+  addProductsButton?.addEventListener('click', async () => {
     const productIds = getProductIds();
 
     if (productIds.length) {
@@ -29,10 +29,8 @@ if (addProductsButton) {
       }
     }
   });
-}
 
-if (newProductsContainer) {
-  newProductsContainer.addEventListener('click', async (evt) => {
+  newProductsContainer?.addEventListener('click', async (evt) => {
     const removeProductButton = evt.target.closest('.js-remove-from-list');
 
     if (!removeProductButton) {
@@ -57,27 +55,29 @@ if (newProductsContainer) {
       }
     }
   });
-}
 
-formElement.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-  const productTitle = productInput.value.trim();
+  formElement?.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const productTitle = productInput.value.trim();
 
-  if (!productTitle.length) {
-    return;
-  }
+    if (!productTitle.length) {
+      return;
+    }
 
-  const response = await fetch('/admin/add-product', {
-    method: 'POST',
-    body: JSON.stringify({ id: crypto.randomUUID(), [productInput.name]: productInput.value }),
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    const response = await fetch('/admin/add-product', {
+      method: 'POST',
+      body: JSON.stringify({ id: crypto.randomUUID(), [productInput.name]: productInput.value }),
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    if (response.ok) {
+      console.log('ok');
+      location.reload();
+    }
   });
+};
 
-  if (response.ok) {
-    console.log('ok');
-    location.reload();
-  }
-});
+init();

@@ -10,12 +10,12 @@ html(lang="en")
     header.header
       nav.nav
         a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Home
-        a(class=(activePath === '/add-product' ? 'active' : '') href="/admin/add-product", target="_self", rel="noopener noreferrer").nav__link Admin
         if cartProducts && cartProducts.length
           a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link.nav__link--cart Cart
             span.cart-count #{cartProducts.length}
         else
           a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link Cart
+        a(class=(activePath === '/add-product' ? 'active' : '') href="/admin/add-product", target="_self", rel="noopener noreferrer").nav__link Admin
   main.main-layout
     block pageContent
   footer.footer fancyshop.com
