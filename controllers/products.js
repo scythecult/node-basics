@@ -1,10 +1,12 @@
-import { ProductService } from '../models/product.js';
-import { AppState } from '../state/state.js';
+import { ProductService } from '../services/product-service.js';
 import { AppCodes, AppRoute } from '../utils.js';
+import { Product } from '../models/product.js';
+import { CartService } from '../services/cart-service.js';
 
 const productService = new ProductService();
+const cartSevice = new CartService();
 
-const getRootProducts = (req, res) => {
+const getRootProducts = async (req, res) => {
   const { path } = req;
   // передаёт в ответе файл html, по определённому пути ФС
   // res.sendFile('shop.html', { root: './views' });
@@ -13,11 +15,13 @@ const getRootProducts = (req, res) => {
   // вторым аргументом передаём объект с данными, которые будут доступны в шаблоне
   // по соотв. названиям полей
   // !это дефолтный флоу работы с шаблонами
+  const products = await productService.getAll();
+
   res.render('shop', {
     pageTitle: 'Fancy Shop',
     activePath: AppRoute.ROOT,
-    products: productService.getAll(),
-    cartProducts: productService.getCartProducts(),
+    products,
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -27,14 +31,14 @@ const getAdminAddProduct = (req, res) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
 const postAdminPendingProduct = (req, res, next) => {
   const newProduct = req.body;
 
-  productService.createPending(newProduct);
+  productService.createPending(new Product(newProduct));
 
   // products.push(req.body);
   // res.status(200).sendFile('product.html', { root: './views' });
@@ -43,20 +47,20 @@ const postAdminPendingProduct = (req, res, next) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
-const postAdminAddProducts = (req, res) => {
+const postAdminAddProducts = async (req, res) => {
   const { productIds } = req.body;
 
-  productService.applyPending(productIds);
+  await productService.applyPending(productIds);
 
   res.status(AppCodes.SUCCESS).render('admin', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -69,7 +73,7 @@ const postAdminRemoveProduct = (req, res) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -81,7 +85,7 @@ const getProductPageProduct = (req, res) => {
 
   res.render('product', {
     activePath: AppRoute.PRODUCT,
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
     productTitle: targetProduct?.title,
   });
 };
@@ -90,22 +94,27 @@ const getCartProduct = (req, res) => {
   res.render('cart', {
     pageTitle: 'Cart Page',
     activePath: AppRoute.CART,
-    cartProducts: productService.getCartProducts(),
+    cartProducts: cartSevice.getProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
 const postCartProduct = (req, res) => {
   const { productId = '' } = req.body;
-  const targetProduct = Product.getById(productId);
 
-  // if (targetProduct) {
-  //   cartProducts: AppState.cartProducts.push(targetProduct);
-  //   res.status(AppCodes.SUCCESS).json({ status: 'product cart was updated', productId });
+  const isProductAdded = cartSevice.addProduct(productId);
 
-  //   return;
-  // }
+  if (isProductAdded) {
+    res.status(AppCodes.SUCCESS).json({ status: 'product cart was updated', productId });
+  }
+};
 
-  // res.status(AppCodes.SUCCESS).json({ status: 'Product doesnt exists!' });
+const postCartRemoveProduct = (req, res) => {
+  const { productId = '' } = req.body;
+
+  cartSevice.removeById(productId);
+
+  res.status(AppCodes.SUCCESS).json({ status: 'product was removed', productId });
 };
 
 export {
@@ -117,4 +126,5 @@ export {
   getProductPageProduct,
   getCartProduct,
   postCartProduct,
+  postCartRemoveProduct,
 };

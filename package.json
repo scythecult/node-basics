@@ -3,6 +3,11 @@
   "scripts": {
     "start": "nodemon server.js"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "stored/*.json"
+    ]
+  },
   "dependencies": {
     "@types/node": "^20.11.5",
     "body-parser": "^1.20.2",

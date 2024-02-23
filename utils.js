@@ -8,6 +8,11 @@ export const HeaderType = {
   TEXT: 'text/html',
   LOCATION: 'Location',
 };
+
+export const FSPath = {
+  STORED: './stored',
+};
+
 export const AppRoute = {
   ROOT: '/',
   PRODUCT_ID: '/:id',
@@ -15,6 +20,7 @@ export const AppRoute = {
   MESSAGE: '/message',
   USERS: '/users',
   CART: '/cart',
+  CART_REMOVE_PRODUCT: '/cart/remove-product',
   CREATE_USER: '/create-user',
   ADD_PRODUCT: '/add-product',
   ADD_PRODUCTS: '/add-products',
@@ -38,28 +44,3 @@ export const AppCodes = {
   NOT_FOUND: 404,
   SUCCESS: 200,
 };
-
-export const getDefaultHTML = (children = '') => `<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <title>Node</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-
-  <body>
-  ${children}
-  </body>
-</html>
-`;
-
-export const getForm = (action = '') => `
-  <form action='${action}' method='POST'>
-    <input type="text" name="user" />
-    <button type="submit">Add user</button>
-  </form>`;
-
-export const getUserList = (nextUser = '') => `
-  <ul>
-    <li>${nextUser}</li>
-  </ul>`;

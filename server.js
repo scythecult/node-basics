@@ -1,7 +1,7 @@
 import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { AppRoute, AppSubRoute, PORT } from './utils.js';
+import { AppSubRoute, PORT } from './utils.js';
 import { adminRoutes } from './routes/admin.js';
 import { shopRoutes } from './routes/shop.js';
 import { errorRoutes } from './routes/not-found.js';
