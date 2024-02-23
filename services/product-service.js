@@ -10,35 +10,14 @@ class ProductService {
   // { id = '', title = '', price = '', description = '', imageScr = '' } = {}
   constructor() {
     this.pendingProducts = [];
-    this.cartProducts = [];
   }
 
   getPendingProducts() {
     return this.pendingProducts;
   }
 
-  getCartProducts() {
-    return this.cartProducts;
-  }
-
   async getAll() {
     return await AppState.getAll();
-  }
-
-  async addToCart(productId = '') {
-    const allProducts = await AppState.getAll();
-
-    if (allProducts.length) {
-      const targetProduct = allProducts.find((product) => product.id === productId);
-
-      if (targetProduct) {
-        this.cartProducts.push(targetProduct);
-
-        return this.cartProducts;
-      }
-    }
-
-    return null;
   }
 
   createPending(newProduct = {}) {

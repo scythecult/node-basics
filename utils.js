@@ -20,6 +20,7 @@ export const AppRoute = {
   MESSAGE: '/message',
   USERS: '/users',
   CART: '/cart',
+  CART_REMOVE_PRODUCT: '/cart/remove-product',
   CREATE_USER: '/create-user',
   ADD_PRODUCT: '/add-product',
   ADD_PRODUCTS: '/add-products',

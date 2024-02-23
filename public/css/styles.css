@@ -161,7 +161,7 @@ h2 {
 }
 
 .product--cart {
-  grid-template-columns: 100px max-content max-content max-content;
+  grid-template-columns: 100px max-content max-content max-content max-content;
   justify-content: space-between;
   align-items: center;
   max-width: none;

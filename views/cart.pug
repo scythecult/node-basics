@@ -12,6 +12,7 @@ block pageContent
                  a(href=`/product/${product.id}`, target="_self", rel="noopener noreferrer").product__image
                   img(src="https://placehold.co/160x160", alt=`${product.title}`)
                  p.product__price $15.99
+                 p.product__quantity quantity: #{product.quantity}
                  p.product__desc Very interesting book...
                  button.product__remove-from-list.js-remove-from-list(data-product-id=`${product.id}`) Remove
 
@@ -19,3 +20,5 @@ block pageContent
     else
       p Cart is empty...
       a.button(href="/", target="_self", rel="noopener noreferrer") Go to main
+block pageScript
+  script(src="/js/cart.js")

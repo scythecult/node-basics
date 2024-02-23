@@ -1,8 +1,10 @@
 import { ProductService } from '../services/product-service.js';
 import { AppCodes, AppRoute } from '../utils.js';
 import { Product } from '../models/product.js';
+import { CartService } from '../services/cart-service.js';
 
 const productService = new ProductService();
+const cartSevice = new CartService();
 
 const getRootProducts = async (req, res) => {
   const { path } = req;
@@ -19,7 +21,7 @@ const getRootProducts = async (req, res) => {
     pageTitle: 'Fancy Shop',
     activePath: AppRoute.ROOT,
     products,
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -29,7 +31,7 @@ const getAdminAddProduct = (req, res) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -45,7 +47,7 @@ const postAdminPendingProduct = (req, res, next) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -58,7 +60,7 @@ const postAdminAddProducts = async (req, res) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -71,7 +73,7 @@ const postAdminRemoveProduct = (req, res) => {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
@@ -83,7 +85,7 @@ const getProductPageProduct = (req, res) => {
 
   res.render('product', {
     activePath: AppRoute.PRODUCT,
-    cartProducts: productService.getCartProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
     productTitle: targetProduct?.title,
   });
 };
@@ -92,18 +94,27 @@ const getCartProduct = (req, res) => {
   res.render('cart', {
     pageTitle: 'Cart Page',
     activePath: AppRoute.CART,
-    cartProducts: productService.getCartProducts(),
+    cartProducts: cartSevice.getProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
 
 const postCartProduct = (req, res) => {
   const { productId = '' } = req.body;
 
-  const isProductAdded = productService.addToCart(productId);
+  const isProductAdded = cartSevice.addProduct(productId);
 
   if (isProductAdded) {
     res.status(AppCodes.SUCCESS).json({ status: 'product cart was updated', productId });
   }
+};
+
+const postCartRemoveProduct = (req, res) => {
+  const { productId = '' } = req.body;
+
+  cartSevice.removeById(productId);
+
+  res.status(AppCodes.SUCCESS).json({ status: 'product was removed', productId });
 };
 
 export {
@@ -115,4 +126,5 @@ export {
   getProductPageProduct,
   getCartProduct,
   postCartProduct,
+  postCartRemoveProduct,
 };
