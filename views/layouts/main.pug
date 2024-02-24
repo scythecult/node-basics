@@ -19,4 +19,11 @@ html(lang="en")
   main.main-layout
     block pageContent
   footer.footer fancyshop.com
+  .dropdown.js-dropdown
+  .modal.js-modal
+    h2 Edit
+    button.button.button--close.js-close-modal Close
+    form.form.form--edit.js-from-edit(method="POST")
+     input.input.js-title-input(type="text", name="title", placeholder="Product name")
+     button.button(type="submit") Apply changes
   block pageScript

@@ -42,6 +42,10 @@ class ProductService {
     return this.pendingProducts;
   }
 
+  async update(editedProducts = []) {
+    return await AppState.update(editedProducts);
+  }
+
   getById(productId = '') {
     return AppState.getById(productId);
   }

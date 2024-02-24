@@ -23,10 +23,17 @@ export const AppRoute = {
   CART_REMOVE_PRODUCT: '/cart/remove-product',
   CREATE_USER: '/create-user',
   ADD_PRODUCT: '/add-product',
+  PRODUCT_LIST: '/product-list',
+  UPDATE_PRODUCTS: '/update-products',
   ADD_PRODUCTS: '/add-products',
   REMOVE_PRODUCT: '/remove-product',
   PRODUCT: '/product',
   ALL: '*',
+};
+
+export const AdminRoute = {
+  ALL_PRODUCTS: '/all-products',
+  ADD_PRODUCT: '/add-product',
 };
 
 export const AppSubRoute = {

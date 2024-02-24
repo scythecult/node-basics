@@ -1,9 +1,12 @@
-extends layouts/main.pug
+extends ../layouts/main.pug
 
 block pageContent
+    nav.nav.admin--nav
+        a(class=(adminActivePath === '/add-product' ? 'active' : '') href="/admin/add-product", target="_self", rel="noopener noreferrer").nav__link Add Product
+        a(class=(adminActivePath === '/all-products' ? 'active' : '') href="/admin/all-products", target="_self", rel="noopener noreferrer").nav__link All Products
     h2 Add new product
     form.form(action="/admin/product", method="POST")
-        input.input(type="text", name="title", placeholder="Product name")
+        input.input.js-title-input(type="text", name="title", placeholder="Product name")
         button.button(type="submit") Add product
     if pendingProducts.length > 0
         .products__container.js-new-products-container
@@ -19,4 +22,4 @@ block pageContent
                button.product__add-to-cart.js-add-to-cart(data-product-id=`${product.id}`) Add to cart
         button.add-products.js-add-products Add products to the shop
 block pageScript
-  script(src="/js/main.js")
+  script(src="/js/admin.js")

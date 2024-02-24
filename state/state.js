@@ -45,6 +45,25 @@ const AppState = {
 
     return newProducts;
   },
+
+  async update(editedProducts = []) {
+    const products = await this.getAll();
+    const updatedProducts = products.map((product) => {
+      const targetEditedProduct = editedProducts.find((editedProduct) => editedProduct.id === product.id);
+
+      if (targetEditedProduct) {
+        product = { ...product, ...targetEditedProduct };
+      }
+
+      return product;
+    });
+
+    this.products = updatedProducts;
+
+    await this._writeProductReport();
+
+    return this.products;
+  },
 };
 
 export { AppState };

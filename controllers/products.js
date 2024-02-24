@@ -1,5 +1,5 @@
 import { ProductService } from '../services/product-service.js';
-import { AppCodes, AppRoute } from '../utils.js';
+import { AdminRoute, AppCodes, AppRoute } from '../utils.js';
 import { Product } from '../models/product.js';
 import { CartService } from '../services/cart-service.js';
 
@@ -17,7 +17,7 @@ const getRootProducts = async (req, res) => {
   // !это дефолтный флоу работы с шаблонами
   const products = await productService.getAll();
 
-  res.render('shop', {
+  res.render('shop/product-list', {
     pageTitle: 'Fancy Shop',
     activePath: AppRoute.ROOT,
     products,
@@ -27,10 +27,38 @@ const getRootProducts = async (req, res) => {
 
 const getAdminAddProduct = (req, res) => {
   // res.sendFile('admin.html', { root: './views' });
-  res.render('admin', {
+  res.render('admin/add-product', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
+    adminActivePath: AdminRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
+  });
+};
+
+const getAdminAllProducts = async (req, res) => {
+  // res.sendFile('admin.html', { root: './views' });
+  const products = await productService.getAll();
+
+  res.render('admin/all-products', {
+    pageTitle: 'Admin Page',
+    activePath: AppRoute.ADD_PRODUCT,
+    adminActivePath: AdminRoute.ALL_PRODUCTS,
+    products,
+    cartProductQuantity: cartSevice.getProductsQuantity(),
+  });
+};
+
+const postAdminUpdateProducts = async (req, res) => {
+  const { editedProducts } = req.body;
+
+  const updatedProducts = await productService.update(editedProducts);
+
+  res.render('admin/all-products', {
+    pageTitle: 'Admin Page',
+    activePath: AppRoute.ADD_PRODUCT,
+    adminActivePath: AdminRoute.ALL_PRODUCTS,
+    products: updatedProducts,
     cartProductQuantity: cartSevice.getProductsQuantity(),
   });
 };
@@ -43,7 +71,7 @@ const postAdminPendingProduct = (req, res, next) => {
   // products.push(req.body);
   // res.status(200).sendFile('product.html', { root: './views' });
   // res.status(AppCodes.SUCCESS).json('done');
-  res.status(AppCodes.SUCCESS).render('admin', {
+  res.status(AppCodes.SUCCESS).render('admin/add-product', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
@@ -56,7 +84,7 @@ const postAdminAddProducts = async (req, res) => {
 
   await productService.applyPending(productIds);
 
-  res.status(AppCodes.SUCCESS).render('admin', {
+  res.status(AppCodes.SUCCESS).render('admin/add-product', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
@@ -69,7 +97,7 @@ const postAdminRemoveProduct = (req, res) => {
 
   productService.removeById(productId);
 
-  res.status(AppCodes.SUCCESS).render('admin', {
+  res.status(AppCodes.SUCCESS).render('admin/add-product', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
     pendingProducts: productService.getPendingProducts(),
@@ -77,13 +105,13 @@ const postAdminRemoveProduct = (req, res) => {
   });
 };
 
-const getProductPageProduct = (req, res) => {
+const getProductDetailsPage = (req, res) => {
   const {
     params: { id },
   } = req;
   const targetProduct = productService.getById(id);
 
-  res.render('product', {
+  res.render('shop/product-details', {
     activePath: AppRoute.PRODUCT,
     cartProductQuantity: cartSevice.getProductsQuantity(),
     productTitle: targetProduct?.title,
@@ -91,7 +119,7 @@ const getProductPageProduct = (req, res) => {
 };
 
 const getCartProduct = (req, res) => {
-  res.render('cart', {
+  res.render('shop/cart', {
     pageTitle: 'Cart Page',
     activePath: AppRoute.CART,
     cartProducts: cartSevice.getProducts(),
@@ -120,10 +148,12 @@ const postCartRemoveProduct = (req, res) => {
 export {
   getRootProducts,
   getAdminAddProduct,
+  getAdminAllProducts,
   postAdminPendingProduct,
   postAdminAddProducts,
   postAdminRemoveProduct,
-  getProductPageProduct,
+  postAdminUpdateProducts,
+  getProductDetailsPage,
   getCartProduct,
   postCartProduct,
   postCartRemoveProduct,
