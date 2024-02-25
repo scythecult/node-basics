@@ -7,7 +7,7 @@ import {
   postAdminUpdateProducts,
   postAdminPendingProduct,
   postAdminRemoveProduct,
-} from '../controllers/products.js';
+} from '../controllers/admin.js';
 
 const adminRoutes = new Router();
 

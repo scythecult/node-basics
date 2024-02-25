@@ -27,7 +27,7 @@ export const AppRoute = {
   UPDATE_PRODUCTS: '/update-products',
   ADD_PRODUCTS: '/add-products',
   REMOVE_PRODUCT: '/remove-product',
-  PRODUCT: '/product',
+  PRODUCT: '/product-details',
   ALL: '*',
 };
 
@@ -38,7 +38,7 @@ export const AdminRoute = {
 
 export const AppSubRoute = {
   ADMIN: '/admin',
-  PRODUCT: '/product',
+  PRODUCT_DETAILS: '/product-details',
 };
 
 export const AppMethod = {

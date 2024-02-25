@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AppRoute } from '../utils.js';
-import { getCartProduct, postCartProduct, postCartRemoveProduct } from '../controllers/products.js';
+import { getCartProduct, postCartProduct, postCartRemoveProduct } from '../controllers/cart.js';
 
 const cartRoutes = new Router();
 

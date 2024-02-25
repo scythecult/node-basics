@@ -10,7 +10,7 @@ block pageContent
           if product.title
             .product
                h3.product__title #{product.title}
-               a(href=`/product/${product.id}`, target="_self", rel="noopener noreferrer").product__image
+               a(href=`/product-details/${product.id}`, target="_self", rel="noopener noreferrer").product__image
                 img(src="https://placehold.co/160x160", alt=`${product.title}`)
                p.product__price $15.99
                p.product__desc Very interesting book...
