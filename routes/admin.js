@@ -6,7 +6,8 @@ import {
   postAdminAddProducts,
   postAdminUpdateProducts,
   postAdminPendingProduct,
-  postAdminRemoveProduct,
+  postAdminRemovePendingProduct,
+  postAdminRemoveAddedProduct,
 } from '../controllers/admin.js';
 
 const adminRoutes = new Router();
@@ -16,6 +17,7 @@ adminRoutes.get(AdminRoute.ALL_PRODUCTS, getAdminAllProducts);
 adminRoutes.post(AppRoute.ADD_PRODUCT, postAdminPendingProduct);
 adminRoutes.post(AppRoute.ADD_PRODUCTS, postAdminAddProducts);
 adminRoutes.post(AppRoute.UPDATE_PRODUCTS, postAdminUpdateProducts);
-adminRoutes.post(AppRoute.REMOVE_PRODUCT, postAdminRemoveProduct);
+adminRoutes.post(AppRoute.REMOVE_PRODUCT, postAdminRemovePendingProduct);
+adminRoutes.post(AppRoute.REMOVE_ADDED_PRODUCT, postAdminRemoveAddedProduct);
 
 export { adminRoutes };

@@ -27,6 +27,7 @@ export const AppRoute = {
   UPDATE_PRODUCTS: '/update-products',
   ADD_PRODUCTS: '/add-products',
   REMOVE_PRODUCT: '/remove-product',
+  REMOVE_ADDED_PRODUCT: '/remove-added-product',
   PRODUCT: '/product-details',
   ALL: '*',
 };

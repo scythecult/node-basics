@@ -69,10 +69,23 @@ export const postAdminAddProducts = async (req, res) => {
   });
 };
 
-export const postAdminRemoveProduct = (req, res) => {
+export const postAdminRemovePendingProduct = (req, res) => {
   const { productId } = req.body;
 
-  productService.removeById(productId);
+  productService.removePendingById(productId);
+
+  res.status(AppCodes.SUCCESS).render('admin/add-product', {
+    pageTitle: 'Admin Page',
+    activePath: AppRoute.ADD_PRODUCT,
+    pendingProducts: productService.getPendingProducts(),
+    cartProductQuantity: cartSevice.getProductsQuantity(),
+  });
+};
+
+export const postAdminRemoveAddedProduct = async (req, res) => {
+  const { productId } = req.body;
+
+  await productService.removeById(productId);
 
   res.status(AppCodes.SUCCESS).render('admin/add-product', {
     pageTitle: 'Admin Page',

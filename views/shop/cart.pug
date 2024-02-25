@@ -11,9 +11,9 @@ block pageContent
                  h3.product__title #{product.title}
                  a(href=`/product/${product.id}`, target="_self", rel="noopener noreferrer").product__image
                   img(src="https://placehold.co/160x160", alt=`${product.title}`)
-                 p.product__price $15.99
+                 p.product__price $ #{product.price}
                  p.product__quantity quantity: #{product.quantity}
-                 p.product__desc Very interesting book...
+                 p.product__desc #{product.description}
                  button.product__remove-from-list.js-remove-from-list(data-product-id=`${product.id}`) Remove
 
         .cart-info Total price: #{cartProducts.length}

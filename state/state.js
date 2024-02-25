@@ -46,6 +46,15 @@ const AppState = {
     return newProducts;
   },
 
+  async removeById(productId = '') {
+    const products = await this.getAll();
+    this.products = products.filter((product) => product.id !== productId);
+
+    await this._writeProductReport();
+
+    return this.products;
+  },
+
   async update(editedProducts = []) {
     const products = await this.getAll();
     const updatedProducts = products.map((product) => {

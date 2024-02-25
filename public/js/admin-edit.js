@@ -1,5 +1,6 @@
 const product = {
   editedProducts: [],
+  removedProducts: new Set(),
   product: {
     id: '',
     title: '',
@@ -61,6 +62,9 @@ const modal = {
 const editForm = {
   form: document.querySelector('.js-from-edit'),
   titleInput: document.querySelector('.js-title-input'),
+  priceInput: document.querySelector('.js-price-input'),
+  descInput: document.querySelector('.js-desc-input'),
+  imageUrlInput: document.querySelector('.js-img-url-input'),
   handler: null,
 
   setHandler(handler, context) {
@@ -71,12 +75,22 @@ const editForm = {
     this.form.addEventListener('submit', async (evt) => {
       evt.preventDefault();
       const productTitle = this.titleInput.value.trim();
+      const productPrice = this.priceInput.value.trim();
+      const productDesc = this.descInput.value.trim();
+      const productImageUrl = this.imageUrlInput.value.trim();
 
-      if (!productTitle.length) {
+      if (!productTitle.length || !productPrice.length || !productDesc.length || !productImageUrl.length) {
         return;
       }
 
-      this.handler?.({ title: productTitle });
+      const editedProduct = {
+        [this.titleInput.name]: productTitle,
+        [this.priceInput.name]: productPrice,
+        [this.descInput.name]: productDesc,
+        [this.imageUrlInput.name]: productImageUrl,
+      };
+
+      this.handler?.(editedProduct);
       const editedProducts = product.getEdited();
 
       const response = await fetch('/admin/update-products', {
@@ -98,18 +112,42 @@ const editForm = {
   },
 };
 
+const removeProduct = async (productId = '') => {
+  const response = await fetch('/admin/remove-added-product', {
+    method: 'POST',
+    body: JSON.stringify({ productId }),
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+
+  if (response.ok) {
+    console.log('ok');
+    modal.close();
+    location.reload();
+  }
+};
+
 const init = () => {
   editForm.init();
   editForm.setHandler(product.save, product);
 
-  document.body.addEventListener('click', (evt) => {
+  document.body.addEventListener('click', async (evt) => {
     const editButton = evt.target.closest('.js-edit');
+    const removeButton = evt.target.closest('.js-remove');
     const closeModalButton = evt.target.closest('.js-close-modal');
 
     if (editButton) {
       const { productId } = editButton.dataset;
       modal.open();
       product.create({ id: productId });
+    }
+
+    if (removeButton) {
+      const { productId } = removeButton.dataset;
+
+      removeProduct(productId);
     }
 
     if (closeModalButton) {
