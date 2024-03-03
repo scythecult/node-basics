@@ -4,6 +4,9 @@ import { cartSevice, productService } from './app.js';
 
 export const getAdminAddProduct = (req, res) => {
   // res.sendFile('admin.html', { root: './views' });
+  // res.status(200).sendFile('product.html', { root: './views' });
+  // res.status(AppCodes.SUCCESS).json('done');
+
   res.render('admin/add-product', {
     pageTitle: 'Admin Page',
     activePath: AppRoute.ADD_PRODUCT,
@@ -14,7 +17,6 @@ export const getAdminAddProduct = (req, res) => {
 };
 
 export const getAdminAllProducts = async (req, res) => {
-  // res.sendFile('admin.html', { root: './views' });
   const products = await productService.getAll();
 
   res.render('admin/all-products', {
@@ -29,31 +31,17 @@ export const getAdminAllProducts = async (req, res) => {
 export const postAdminUpdateProducts = async (req, res) => {
   const { editedProducts } = req.body;
 
-  const updatedProducts = await productService.update(editedProducts);
+  await productService.update(editedProducts);
 
-  res.render('admin/all-products', {
-    pageTitle: 'Admin Page',
-    activePath: AppRoute.ADD_PRODUCT,
-    adminActivePath: AdminRoute.ALL_PRODUCTS,
-    products: updatedProducts,
-    cartProductQuantity: cartSevice.getProductsQuantity(),
-  });
+  res.status(AppCodes.SUCCESS).json({ status: 'ok' });
 };
 
-export const postAdminPendingProduct = (req, res, next) => {
+export const postAdminPendingProduct = (req, res) => {
   const newProduct = req.body;
 
   productService.createPending(new Product(newProduct));
 
-  // products.push(req.body);
-  // res.status(200).sendFile('product.html', { root: './views' });
-  // res.status(AppCodes.SUCCESS).json('done');
-  res.status(AppCodes.SUCCESS).render('admin/add-product', {
-    pageTitle: 'Admin Page',
-    activePath: AppRoute.ADD_PRODUCT,
-    pendingProducts: productService.getPendingProducts(),
-    cartProductQuantity: cartSevice.getProductsQuantity(),
-  });
+  res.status(AppCodes.SUCCESS).json({ status: 'ok' });
 };
 
 export const postAdminAddProducts = async (req, res) => {
@@ -61,12 +49,7 @@ export const postAdminAddProducts = async (req, res) => {
 
   await productService.applyPending(productIds);
 
-  res.status(AppCodes.SUCCESS).render('admin/add-product', {
-    pageTitle: 'Admin Page',
-    activePath: AppRoute.ADD_PRODUCT,
-    pendingProducts: productService.getPendingProducts(),
-    cartProductQuantity: cartSevice.getProductsQuantity(),
-  });
+  res.status(AppCodes.SUCCESS).json({ status: 'ok' });
 };
 
 export const postAdminRemovePendingProduct = (req, res) => {
@@ -74,12 +57,7 @@ export const postAdminRemovePendingProduct = (req, res) => {
 
   productService.removePendingById(productId);
 
-  res.status(AppCodes.SUCCESS).render('admin/add-product', {
-    pageTitle: 'Admin Page',
-    activePath: AppRoute.ADD_PRODUCT,
-    pendingProducts: productService.getPendingProducts(),
-    cartProductQuantity: cartSevice.getProductsQuantity(),
-  });
+  res.status(AppCodes.SUCCESS).json({ status: 'ok' });
 };
 
 export const postAdminRemoveAddedProduct = async (req, res) => {
@@ -87,10 +65,5 @@ export const postAdminRemoveAddedProduct = async (req, res) => {
 
   await productService.removeById(productId);
 
-  res.status(AppCodes.SUCCESS).render('admin/add-product', {
-    pageTitle: 'Admin Page',
-    activePath: AppRoute.ADD_PRODUCT,
-    pendingProducts: productService.getPendingProducts(),
-    cartProductQuantity: cartSevice.getProductsQuantity(),
-  });
+  res.status(AppCodes.SUCCESS).json({ status: 'ok' });
 };
