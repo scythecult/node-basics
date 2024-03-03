@@ -16,7 +16,11 @@ block pageContent
                  p.product__desc #{product.description}
                  button.product__remove-from-list.js-remove-from-list(data-product-id=`${product.id}`) Remove
 
-        .cart-info Total price: #{cartProducts.length}
+        .cart-info
+          form.promocode-form
+            input(class="js-promocode-input" type="text" name="promocode" placeholder="Enter promocode")
+            button(type="submit") Use Promocode
+          p.cart-info__total-price Total price: #{totalPrice} $
     else
       p Cart is empty...
       a.button(href="/", target="_self", rel="noopener noreferrer") Go to main

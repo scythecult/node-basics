@@ -222,12 +222,20 @@ h2 {
 .cart-info {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: start;
   min-width: 300px;
   min-height: 300px;
   padding: 16px;
   background-color: #f3f3f3;
   border-radius: 6px;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+.cart-info__total-price {
+  margin: 0;
+  align-self: end;
+  justify-self: end;
+  font-weight: 700;
 }
 
 .dropdown {

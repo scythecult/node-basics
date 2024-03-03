@@ -7,6 +7,7 @@ export const getCartProduct = (req, res) => {
     activePath: AppRoute.CART,
     cartProducts: cartSevice.getProducts(),
     cartProductQuantity: cartSevice.getProductsQuantity(),
+    totalPrice: cartSevice.getTotalPrice(),
   });
 };
 
@@ -26,4 +27,12 @@ export const postCartRemoveProduct = (req, res) => {
   cartSevice.removeById(productId);
 
   res.status(AppCodes.SUCCESS).json({ status: 'product was removed', productId });
+};
+
+export const postCartUsePromocode = (req, res) => {
+  const { promocode } = req.body;
+
+  const userPromocode = cartSevice.setUserPromocode(promocode);
+
+  res.status(AppCodes.SUCCESS).json({ status: 'current promocode:', promocode: userPromocode });
 };

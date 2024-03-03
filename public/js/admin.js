@@ -73,7 +73,6 @@ const init = () => {
     const response = await fetch('/admin/add-product', {
       method: 'POST',
       body: JSON.stringify({
-        id: crypto.randomUUID(),
         [productTitleInput.name]: productTitle,
         [productPriceInput.name]: productPrice,
         [productDescInput.name]: productDesc,
