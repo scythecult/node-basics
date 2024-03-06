@@ -1,7 +1,14 @@
 extends ../layouts/main.pug
 
 block pageContent
-    if productTitle
-      h2 Product page: #{productTitle}
+    if targetProduct.id
+      .product-details
+        h2 #{targetProduct.title}
+        .product-details__content
+          .product-details__image
+            img(src=`${targetProduct.imageSrc}`, alt=`${targetProduct.title}`)
+          .aside-info
+            p.product-details__desc #{targetProduct.description}
+            button.product__add-to-cart.js-add-to-cart(data-product-id=`${targetProduct.id}`) Add to cart
     else
       h2 There is no such product in our shop!

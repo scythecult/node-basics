@@ -10,6 +10,6 @@ export const getProductDetailsPage = (req, res) => {
   res.render('shop/product-details', {
     activePath: AppRoute.PRODUCT,
     cartProductQuantity: cartSevice.getProductsQuantity(),
-    productTitle: targetProduct?.title,
+    targetProduct,
   });
 };

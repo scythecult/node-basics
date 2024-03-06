@@ -9,7 +9,7 @@ html(lang="en")
   body
     header.header
       nav.nav
-        a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Home
+        a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Shop
         if cartProductQuantity > 0
           a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link.nav__link--cart Cart
             span.cart-count #{cartProductQuantity}

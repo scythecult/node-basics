@@ -63,6 +63,7 @@ export const postAdminRemovePendingProduct = (req, res) => {
 export const postAdminRemoveAddedProduct = async (req, res) => {
   const { productId } = req.body;
 
+  cartSevice.removeById(productId);
   await productService.removeById(productId);
 
   res.status(AppCodes.SUCCESS).json({ status: 'ok' });

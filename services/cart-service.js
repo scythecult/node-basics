@@ -20,7 +20,10 @@ class CartService {
 
   getTotalPrice() {
     const { value, discount } = this.seasonPromocode;
-    const result = this.cartProducts.reduce((initial, current) => (initial += current.quantity * current.price), 0);
+    const result = this.cartProducts.reduce(
+      (initial, current) => (initial += current.quantity * current.price.replace(/\D+/g, '')),
+      0
+    );
 
     if (this.userPromocode && this.userPromocode === value) {
       this.totalPrice -= result * (discount / 100);
@@ -72,7 +75,7 @@ class CartService {
             ...this.cartProducts.slice(sameProductIndex + 1),
           ];
 
-          return;
+          return this.cartProducts;
         }
 
         this.cartProducts.push(targetProduct);
