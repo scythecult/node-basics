@@ -1,7 +1,5 @@
-const productsContainer = document.querySelector('.js-products-container');
-
 const init = () => {
-  productsContainer?.addEventListener('click', async (evt) => {
+  document.body?.addEventListener('click', async (evt) => {
     const addToCartButton = evt.target.closest('.js-add-to-cart');
 
     if (!addToCartButton) {
