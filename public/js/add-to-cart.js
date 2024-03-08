@@ -21,8 +21,6 @@ const init = () => {
       if (response.ok) {
         const result = await response.json();
         location.reload();
-
-        console.log(result);
       }
     }
   });
