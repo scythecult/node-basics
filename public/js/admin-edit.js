@@ -1,6 +1,5 @@
 const product = {
   editedProducts: [],
-  removedProducts: new Set(),
   product: {
     id: '',
     title: '',
