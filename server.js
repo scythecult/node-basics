@@ -5,9 +5,8 @@ import { AppSubRoute, PORT } from './utils.js';
 import { adminRoutes } from './routes/admin.js';
 import { shopRoutes } from './routes/shop.js';
 import { errorRoutes } from './routes/not-found.js';
-import { productRoute } from './routes/product.js';
+import { productDetailsRoute } from './routes/product-details.js';
 import { cartRoutes } from './routes/cart.js';
-const fileSystem = fs;
 const app = express();
 
 // устанавливаем темлэйт-движок
@@ -34,7 +33,7 @@ app.use(AppSubRoute.ADMIN, adminRoutes);
 
 // будет работать в www.check.com/something
 app.use(shopRoutes);
-app.use(AppSubRoute.PRODUCT, productRoute);
+app.use(AppSubRoute.PRODUCT_DETAILS, productDetailsRoute);
 app.use(cartRoutes);
 app.use(errorRoutes);
 

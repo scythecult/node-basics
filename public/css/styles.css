@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --main-grey: #f3f3f3;
 }
@@ -35,6 +41,7 @@ h2 {
   padding: 12px;
   color: currentColor;
   text-decoration: none;
+  background-color: ghostwhite;
   border-radius: 14px;
   transition-property: background-color;
   transition-duration: 0.2s;
@@ -95,6 +102,10 @@ h2 {
   border-radius: 12px;
 }
 
+.form--edit {
+  max-width: none;
+}
+
 .input {
   min-height: 44px;
   padding: 0 12px;
@@ -120,6 +131,10 @@ h2 {
   border: none;
   transition-property: background-color;
   transition-duration: 0.2s;
+}
+
+.button--close {
+  max-width: max-content;
 }
 
 .button:hover {
@@ -210,13 +225,68 @@ h2 {
   gap: 24px;
 }
 
-.cart-info {
+.aside-info {
   display: grid;
   grid-template-columns: 1fr;
-  min-width: 300px;
+  align-items: start;
+  width: 100%;
+  max-width: 300px;
   min-height: 300px;
   padding: 16px;
   background-color: #f3f3f3;
   border-radius: 6px;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+.aside-info__total-price {
+  margin: 0;
+  align-self: end;
+  justify-self: end;
+  font-weight: 700;
+}
+
+.dropdown {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: none;
+  gap: 14px;
+  grid-template-columns: 1fr max-content;
+  justify-content: space-between;
+  width: 600px;
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  transform: translate(-50%, -50%);
+}
+
+.dropdown.opened {
+  display: block;
+}
+
+.modal.opened {
+  display: grid;
+}
+
+.product-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.product-details__content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  align-items: start;
+  gap: 24px;
 }

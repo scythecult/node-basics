@@ -3,10 +3,37 @@ import { AppState } from '../state/state.js';
 class CartService {
   constructor() {
     this.cartProducts = [];
+    this.totalPrice = 0;
+    this.userPromocode = '';
+    this.seasonPromocode = { value: 'CHECK', discount: 10 };
   }
 
   getProducts() {
     return this.cartProducts;
+  }
+
+  setUserPromocode(promocode = '') {
+    this.userPromocode = promocode;
+
+    return this.userPromocode;
+  }
+
+  getTotalPrice() {
+    const { value, discount } = this.seasonPromocode;
+    const result = this.cartProducts.reduce(
+      (initial, current) => (initial += current.quantity * current.price.replace(/\D+/g, '')),
+      0
+    );
+
+    if (this.userPromocode && this.userPromocode === value) {
+      this.totalPrice -= result * (discount / 100);
+
+      return this.totalPrice.toFixed(1);
+    }
+
+    this.totalPrice = result;
+
+    return this.totalPrice;
   }
 
   getProductsQuantity() {
@@ -48,7 +75,7 @@ class CartService {
             ...this.cartProducts.slice(sameProductIndex + 1),
           ];
 
-          return;
+          return this.cartProducts;
         }
 
         this.cartProducts.push(targetProduct);

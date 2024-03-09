@@ -45,6 +45,34 @@ const AppState = {
 
     return newProducts;
   },
+
+  async removeById(productId = '') {
+    const products = await this.getAll();
+    this.products = products.filter((product) => product.id !== productId);
+
+    await this._writeProductReport();
+
+    return this.products;
+  },
+
+  async update(editedProducts = []) {
+    const products = await this.getAll();
+    const updatedProducts = products.map((product) => {
+      const targetEditedProduct = editedProducts.find((editedProduct) => editedProduct.id === product.id);
+
+      if (targetEditedProduct) {
+        product = { ...product, ...targetEditedProduct };
+      }
+
+      return product;
+    });
+
+    this.products = updatedProducts;
+
+    await this._writeProductReport();
+
+    return this.products;
+  },
 };
 
 export { AppState };

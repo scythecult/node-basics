@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AppRoute } from '../utils.js';
-import { getRootProducts } from '../controllers/products.js';
+import { getRootProducts } from '../controllers/shop.js';
 
 // api? которая использует внутри себя fetch и ходит по маршрутам
 //

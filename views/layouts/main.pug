@@ -9,7 +9,7 @@ html(lang="en")
   body
     header.header
       nav.nav
-        a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Home
+        a(class=(activePath === '/' ? 'active' : '') href="/", target="_self", rel="noopener noreferrer").nav__link Shop
         if cartProductQuantity > 0
           a(class=(activePath === '/cart' ? 'active' : '') href="/cart", target="_self", rel="noopener noreferrer").nav__link.nav__link--cart Cart
             span.cart-count #{cartProductQuantity}
@@ -19,4 +19,14 @@ html(lang="en")
   main.main-layout
     block pageContent
   footer.footer fancyshop.com
+  .dropdown.js-dropdown
+  .modal.js-modal
+    h2 Edit
+    button.button.button--close.js-close-modal Close
+    form.form.form--edit.js-from-edit(method="POST")
+     input.input.js-title-input(type="text", name="title", placeholder="Product name")
+     input.input.js-price-input(type="number", name="price", placeholder="Product price")
+     input.input.js-desc-input(type="text", name="description", placeholder="Product description")
+     input.input.js-img-url-input(type="text", name="imageScr", placeholder="Product image url")
+     button.button(type="submit") Apply changes
   block pageScript

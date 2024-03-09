@@ -1,5 +1,8 @@
 const formElement = document.querySelector('.form');
-const productInput = formElement.querySelector('.input');
+const productTitleInput = formElement.querySelector('.js-title-input');
+const productPriceInput = formElement.querySelector('.js-price-input');
+const productDescInput = formElement.querySelector('.js-desc-input');
+const productImageUrlInput = formElement.querySelector('.js-img-url-input');
 const newProductsContainer = document.querySelector('.js-new-products-container');
 const addProductsButton = document.querySelector('.js-add-products');
 
@@ -58,15 +61,23 @@ const init = () => {
 
   formElement?.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    const productTitle = productInput.value.trim();
+    const productTitle = productTitleInput.value.trim();
+    const productPrice = productPriceInput.value.trim();
+    const productDesc = productDescInput.value.trim();
+    const productImageUrl = productImageUrlInput.value.trim();
 
-    if (!productTitle.length) {
+    if (!productTitle.length || !productPrice.length || !productDesc.length || !productImageUrl.length) {
       return;
     }
 
     const response = await fetch('/admin/add-product', {
       method: 'POST',
-      body: JSON.stringify({ id: crypto.randomUUID(), [productInput.name]: productInput.value }),
+      body: JSON.stringify({
+        [productTitleInput.name]: productTitle,
+        [productPriceInput.name]: productPrice,
+        [productDescInput.name]: productDesc,
+        [productImageUrlInput.name]: productImageUrl,
+      }),
       headers: {
         'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',

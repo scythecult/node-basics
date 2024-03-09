@@ -1,4 +1,4 @@
-extends layouts/main.pug
+extends ../layouts/main.pug
 
 block pageContent
     h2 Cart
@@ -11,12 +11,16 @@ block pageContent
                  h3.product__title #{product.title}
                  a(href=`/product/${product.id}`, target="_self", rel="noopener noreferrer").product__image
                   img(src="https://placehold.co/160x160", alt=`${product.title}`)
-                 p.product__price $15.99
+                 p.product__price $ #{product.price}
                  p.product__quantity quantity: #{product.quantity}
-                 p.product__desc Very interesting book...
+                 p.product__desc #{product.description}
                  button.product__remove-from-list.js-remove-from-list(data-product-id=`${product.id}`) Remove
 
-        .cart-info Total price: #{cartProducts.length}
+        .aside-info
+          form.promocode-form
+            input(class="js-promocode-input" type="text" name="promocode" placeholder="Enter promocode")
+            button(type="submit") Use Promocode
+          p.aside-info__total-price Total price: #{totalPrice} $
     else
       p Cart is empty...
       a.button(href="/", target="_self", rel="noopener noreferrer") Go to main

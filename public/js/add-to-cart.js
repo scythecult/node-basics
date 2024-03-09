@@ -1,7 +1,5 @@
-const productsContainer = document.querySelector('.js-products-container');
-
 const init = () => {
-  productsContainer?.addEventListener('click', async (evt) => {
+  document.body?.addEventListener('click', async (evt) => {
     const addToCartButton = evt.target.closest('.js-add-to-cart');
 
     if (!addToCartButton) {
@@ -23,8 +21,6 @@ const init = () => {
       if (response.ok) {
         const result = await response.json();
         location.reload();
-
-        console.log(result);
       }
     }
   });

@@ -36,10 +36,18 @@ class ProductService {
     this.pendingProducts = [];
   }
 
-  removeById(productId = '') {
+  removePendingById(productId = '') {
     this.pendingProducts = this.pendingProducts.filter((product) => product.id !== productId);
 
     return this.pendingProducts;
+  }
+
+  async removeById(productId = '') {
+    return await AppState.removeById(productId);
+  }
+
+  async update(editedProducts = []) {
+    return await AppState.update(editedProducts);
   }
 
   getById(productId = '') {
