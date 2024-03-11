@@ -1,7 +1,6 @@
 import { ProductService } from '../services/product-service.js';
 import { CartService } from '../services/cart-service.js';
-
-import { AppCodes } from '../utils.js';
+import { AppCodes } from '../common/enums/api.js';
 
 export const productService = new ProductService();
 export const cartSevice = new CartService();

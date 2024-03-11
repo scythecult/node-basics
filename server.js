@@ -1,12 +1,11 @@
-import fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { AppSubRoute, PORT } from './utils.js';
 import { adminRoutes } from './routes/admin.js';
 import { shopRoutes } from './routes/shop.js';
 import { errorRoutes } from './routes/not-found.js';
 import { productDetailsRoute } from './routes/product-details.js';
 import { cartRoutes } from './routes/cart.js';
+import { AppSubRoute, PORT } from './common/enums/api.js';
 const app = express();
 
 // устанавливаем темлэйт-движок

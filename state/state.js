@@ -1,5 +1,5 @@
 import fsPromise from 'node:fs/promises';
-import { FSPath } from '../utils.js';
+import { FSPath } from '../common/enums/api.js';
 
 const fileSystem = fsPromise;
 

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdminRoute, AppRoute } from '../utils.js';
+import { AdminRoute, AppRoute } from '../common/enums/api.js';
 import {
   getAdminAddProduct,
   getAdminAllProducts,
