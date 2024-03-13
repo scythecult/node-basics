@@ -9,6 +9,7 @@ import { PORT } from '../common/enums/api.js';
 import { sequelize } from '../db/db.js';
 import path from 'path';
 import * as url from 'url';
+import { Api } from './services/api.js';
 
 export const FILENAME = url.fileURLToPath(import.meta.url);
 export const DIRNAME = url.fileURLToPath(new URL('.', import.meta.url));
@@ -43,7 +44,9 @@ app.use(express.static(path.resolve(DIRNAME, 'public')));
 // без const body = [] ... body.push(...)
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 
-initShopRouter(app);
+const api = new Api();
+
+initShopRouter(app, { api });
 initAdminRounter(app);
 initProductDetailsRouter(app);
 initCartRouter(app);
