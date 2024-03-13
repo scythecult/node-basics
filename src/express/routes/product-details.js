@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { getProductDetailsPage } from '../controllers/product-details.js';
-import { AppRoute } from '../../common/enums/api.js';
+import { AppRoute, AppSubRoute } from '../../common/enums/api.js';
 
-const productDetailsRoute = new Router();
+export const initProductDetailsRouter = (app) => {
+  const productDetailsRoute = new Router();
 
-productDetailsRoute.get(AppRoute.PRODUCT_ID, getProductDetailsPage);
+  app.use(AppSubRoute.PRODUCT_DETAILS, productDetailsRoute);
 
-export { productDetailsRoute };
+  productDetailsRoute.get(AppRoute.PRODUCT_ID, getProductDetailsPage);
+};

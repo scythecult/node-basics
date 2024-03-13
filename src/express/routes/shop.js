@@ -4,10 +4,13 @@ import { getRootProducts } from '../controllers/shop.js';
 
 // api? которая использует внутри себя fetch и ходит по маршрутам
 //
-const shopRoutes = new Router();
 
-// будет слушать только гет-запросы, по определённому адресу
-shopRoutes.get(AppRoute.ROOT, getRootProducts);
-// shopRoutes.post(AppRoute.ROOT, postRootProducts);
+export const initShopRouter = (app) => {
+  const shopRoutes = new Router();
 
-export { shopRoutes };
+  // будет работать в www.check.com/something
+  app.use(shopRoutes);
+  // будет слушать только гет-запросы, по определённому адресу
+  shopRoutes.get(AppRoute.ROOT, getRootProducts);
+  // shopRoutes.post(AppRoute.ROOT, postRootProducts);
+};

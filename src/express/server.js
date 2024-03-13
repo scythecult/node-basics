@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { adminRoutes } from './routes/admin.js';
-import { shopRoutes } from './routes/shop.js';
+import { initAdminRounter } from './routes/admin.js';
+import { initShopRouter } from './routes/shop.js';
 import { errorRoutes } from './routes/not-found.js';
-import { productDetailsRoute } from './routes/product-details.js';
-import { cartRoutes } from './routes/cart.js';
-import { AppSubRoute, PORT } from '../common/enums/api.js';
+import { initProductDetailsRouter } from './routes/product-details.js';
+import { initCartRouter } from './routes/cart.js';
+import { PORT } from '../common/enums/api.js';
 import { sequelize } from '../db/db.js';
 import path from 'path';
 import * as url from 'url';
@@ -34,7 +34,7 @@ app.set('view engine', 'pug');
 // app.set('view engine', 'handlebars');
 
 // можно не ставить, если views находятся в корне
-app.set('views', `${DIRNAME}/views`);
+app.set('views', path.resolve(DIRNAME, 'views'));
 
 // устанавливаем путь к папке с общими ресурсами
 app.use(express.static(path.resolve(DIRNAME, 'public')));
@@ -43,13 +43,10 @@ app.use(express.static(path.resolve(DIRNAME, 'public')));
 // без const body = [] ... body.push(...)
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 
-// можно добавить часть пути, по которому будет работать основной маршрут
-app.use(AppSubRoute.ADMIN, adminRoutes);
-
-// будет работать в www.check.com/something
-app.use(shopRoutes);
-app.use(AppSubRoute.PRODUCT_DETAILS, productDetailsRoute);
-app.use(cartRoutes);
+initShopRouter(app);
+initAdminRounter(app);
+initProductDetailsRouter(app);
+initCartRouter(app);
 app.use(errorRoutes);
 
 // порт
