@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon --import dotenv/config ./src/express/server.js"
   },
   "nodemonConfig": {
     "ignore": [

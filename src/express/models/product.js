@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { makeUcFirst } from '../utils.js';
+import { makeUcFirst } from '../../utils/utils.js';
 
 const { format } = Intl.NumberFormat('en-EN');
 

@@ -1,4 +1,4 @@
-import { AppState } from '../state/state.js';
+import { AppState } from '../mock-db.js';
 
 // на клиенте отправить запрос с данными о товаре
 // в контроллере обработать соотв. запрос вызвав метод инстанца Product

@@ -1,4 +1,4 @@
-import { AppCodes, AppRoute } from '../common/enums/api.js';
+import { AppCodes, AppRoute } from '../../common/enums/api.js';
 import { cartSevice } from './app.js';
 
 export const getCartProduct = (req, res) => {

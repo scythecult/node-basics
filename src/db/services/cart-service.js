@@ -1,4 +1,4 @@
-import { AppState } from '../state/state.js';
+import { AppState } from '../mock-db.js';
 
 class CartService {
   constructor() {

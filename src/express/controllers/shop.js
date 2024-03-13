@@ -1,4 +1,4 @@
-import { AppRoute } from '../common/enums/api.js';
+import { AppRoute } from '../../common/enums/api.js';
 import { cartSevice, productService } from './app.js';
 
 const getRootProducts = async (req, res) => {
