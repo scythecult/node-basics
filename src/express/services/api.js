@@ -16,7 +16,7 @@ export class Api {
   async applyPendingProducts(productIds = []) {
     const appliedProducts = this.pendingProducts.filter((product) => productIds.includes(product.id));
     AppState.create(appliedProducts);
-    this.clearPending();
+    this._clearPendingProducts();
 
     return await AppState.getAll();
   }
@@ -68,7 +68,7 @@ export class Api {
     this.pendingProducts.push(newProduct);
   }
 
-  clearPendingProducts() {
+  _clearPendingProducts() {
     this.pendingProducts = [];
   }
 

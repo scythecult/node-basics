@@ -47,7 +47,7 @@ app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
 const api = new Api();
 
 initShopRouter(app, { api });
-initAdminRounter(app);
+initAdminRounter(app, { api });
 initProductDetailsRouter(app);
 initCartRouter(app);
 app.use(errorRoutes);
