@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { initAdminRounter } from './routes/admin.js';
 import { initShopRouter } from './routes/shop.js';
-import { errorRoutes } from './routes/not-found.js';
+import { initErrorRouter } from './routes/not-found.js';
 import { initProductDetailsRouter } from './routes/product-details.js';
 import { initCartRouter } from './routes/cart.js';
 import { PORT } from '../common/enums/api.js';
@@ -48,9 +48,8 @@ const api = new Api();
 
 initShopRouter(app, { api });
 initAdminRounter(app, { api });
-initProductDetailsRouter(app);
-initCartRouter(app);
-app.use(errorRoutes);
-
+initProductDetailsRouter(app, { api });
+initCartRouter(app, { api });
+initErrorRouter(app);
 // порт
 app.listen(PORT);
