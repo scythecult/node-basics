@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { AppRoute } from '../../common/enums/api.js';
+import { CookieName, CookieOptions } from '../../common/enums/cookies.js';
 
 // api? которая использует внутри себя fetch и ходит по маршрутам
 //
@@ -12,7 +13,13 @@ export const initShopRouter = (app, settings = {}) => {
   app.use(shopRoutes);
   // будет слушать только гет-запросы, по определённому адресу
   shopRoutes.get(AppRoute.ROOT, async (req, res) => {
-    const { path } = req;
+    const { path, cookies } = req;
+    const isKnownUser = !!cookies[CookieName.TRACK_FLAG];
+
+    if (!isKnownUser) {
+      res.cookie(CookieName.TRACK_FLAG, 'check', CookieOptions);
+    }
+    console.log('client cookies', cookies);
     // передаёт в ответе файл html, по определённому пути ФС
     // res.sendFile('shop.html', { root: './views' });
 
@@ -29,6 +36,7 @@ export const initShopRouter = (app, settings = {}) => {
       activePath: AppRoute.ROOT,
       products,
       cartProductQuantity,
+      isKnownUser,
     });
   });
   // shopRoutes.post(AppRoute.ROOT, postRootProducts);

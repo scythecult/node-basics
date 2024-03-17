@@ -3,7 +3,7 @@ import { AdminRoute, AppRoute, AppSubRoute } from '../../common/enums/api.js';
 import { StatusCodes } from 'http-status-codes';
 import { Product } from '../models/product.js';
 
-export const initAdminRounter = (app, settings = {}) => {
+export const initAdminRouter = (app, settings = {}) => {
   const adminRoutes = new Router();
   const { api } = settings;
   // можно добавить часть пути, по которому будет работать основной маршрут
@@ -61,6 +61,7 @@ export const initAdminRounter = (app, settings = {}) => {
 
     res.status(StatusCodes.OK).json({ status: 'ok' });
   });
+
   adminRoutes.post(AppRoute.REMOVE_PRODUCT, (req, res) => {
     const { productId } = req.body;
 

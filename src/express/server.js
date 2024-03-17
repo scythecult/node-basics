@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { initAdminRounter } from './routes/admin.js';
+import { initAdminRouter } from './routes/admin.js';
 import { initShopRouter } from './routes/shop.js';
 import { initErrorRouter } from './routes/not-found.js';
 import { initProductDetailsRouter } from './routes/product-details.js';
@@ -10,6 +10,7 @@ import { sequelize } from '../db/db.js';
 import path from 'path';
 import * as url from 'url';
 import { Api } from './services/api.js';
+import cookieParser from 'cookie-parser';
 
 export const FILENAME = url.fileURLToPath(import.meta.url);
 export const DIRNAME = url.fileURLToPath(new URL('.', import.meta.url));
@@ -43,11 +44,12 @@ app.use(express.static(path.resolve(DIRNAME, 'public')));
 // добавляем возможность легко парсить тело запроса
 // без const body = [] ... body.push(...)
 app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const api = new Api();
 
 initShopRouter(app, { api });
-initAdminRounter(app, { api });
+initAdminRouter(app, { api });
 initProductDetailsRouter(app, { api });
 initCartRouter(app, { api });
 initErrorRouter(app);
