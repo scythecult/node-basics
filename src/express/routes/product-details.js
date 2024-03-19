@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import { AppRoute, AppSubRoute } from '../../common/enums/api.js';
+import { AppRoute } from '../../common/enums/api.js';
 
-export const initProductDetailsRouter = (app, settings = {}) => {
+export const initProductDetailsRouter = (settings = {}) => {
   const productDetailsRoute = new Router();
   const { api } = settings;
-
-  app.use(AppSubRoute.PRODUCT_DETAILS, productDetailsRoute);
 
   productDetailsRoute.get(AppRoute.PRODUCT_ID, (req, res) => {
     const {
@@ -20,4 +18,6 @@ export const initProductDetailsRouter = (app, settings = {}) => {
       targetProduct,
     });
   });
+
+  return productDetailsRoute;
 };

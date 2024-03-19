@@ -2,13 +2,11 @@ import { Router } from 'express';
 import { AppRoute } from '../../common/enums/api.js';
 import { StatusCodes } from 'http-status-codes';
 
-export const initCartRouter = (app, settings = {}) => {
+export const initCartRouter = (settings = {}) => {
   const cartRoutes = new Router();
   const { api } = settings;
 
-  app.use(cartRoutes);
-
-  cartRoutes.get(AppRoute.CART, (req, res) => {
+  cartRoutes.get(AppRoute.ROOT, (req, res) => {
     const cartProducts = api.getCartProducts();
     const cartProductQuantity = api.getCartProductsQuantity();
     const totalPrice = api.getTotalCartPrice();
@@ -22,7 +20,7 @@ export const initCartRouter = (app, settings = {}) => {
     });
   });
 
-  cartRoutes.post(AppRoute.CART, async (req, res) => {
+  cartRoutes.post(AppRoute.ROOT, async (req, res) => {
     const { productId = '' } = req.body;
 
     const isProductAdded = await api.addCartProduct(productId);
@@ -47,4 +45,6 @@ export const initCartRouter = (app, settings = {}) => {
 
     res.status(StatusCodes.OK).json({ status: 'current promocode:', promocode: userPromocode });
   });
+
+  return cartRoutes;
 };

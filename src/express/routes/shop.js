@@ -5,12 +5,12 @@ import { CookieName, CookieOptions } from '../../common/enums/cookies.js';
 // api? которая использует внутри себя fetch и ходит по маршрутам
 //
 
-export const initShopRouter = (app, settings = {}) => {
+export const initShopRouter = (settings = {}) => {
   const shopRoutes = new Router();
   const { api } = settings;
 
   // будет работать в www.check.com/something
-  app.use(shopRoutes);
+  // app.use(shopRoutes);
   // будет слушать только гет-запросы, по определённому адресу
   shopRoutes.get(AppRoute.ROOT, async (req, res) => {
     const { path, cookies } = req;
@@ -40,4 +40,6 @@ export const initShopRouter = (app, settings = {}) => {
     });
   });
   // shopRoutes.post(AppRoute.ROOT, postRootProducts);
+
+  return shopRoutes;
 };
