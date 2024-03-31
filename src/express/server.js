@@ -1,10 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { AppRoute, PORT } from '../common/enums/api.js';
+import { AppRoute, SSR_PORT } from '../common/enums/api.js';
 import { sequelize } from '../db/db.js';
 import path from 'path';
 import * as url from 'url';
-import { Api } from './services/api.js';
+import { Api } from './api.js';
 import cookieParser from 'cookie-parser';
 import { defineModels } from '../db/define-models.js';
 import { initMainRouter } from './routes/main.js';
@@ -15,22 +15,6 @@ export const DIRNAME = url.fileURLToPath(new URL('.', import.meta.url));
 
 const app = express();
 
-const init = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('succeed');
-  } catch (error) {
-    console.error(error.message);
-
-    throw error;
-  }
-
-  // const { Product } = defineModels(sequelize);
-
-  // await sequelize.sync({ force: true });
-};
-
-init();
 // устанавливаем темлэйт-движок
 app.set('view engine', 'pug');
 // ...или если у express нет втроенной интеграции стоит воспользоваться другим синтаксисом:
@@ -60,4 +44,4 @@ app.use(AppRoute.ALL, (req, res) => {
 });
 
 // порт
-app.listen(PORT);
+app.listen(SSR_PORT);

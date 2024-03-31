@@ -1,4 +1,5 @@
-import { AppState } from '../../db/mock-db.js';
+import { SERVICE_PORT } from '../common/enums/api.js';
+import { DataBase } from '../db/mock-db.js';
 
 export class Api {
   constructor() {
@@ -9,20 +10,27 @@ export class Api {
     this.seasonPromocode = { value: 'CHECK', discount: 10 };
   }
 
+  async experimental_getAllProducts() {
+    const response = await fetch(`http://localhost:${SERVICE_PORT}/api/`, { method: 'GET' });
+    const result = await response.json();
+
+    console.log('API RESPONSE', result);
+  }
+
   async getAllProducts() {
-    return await AppState.getAll();
+    return await DataBase.getAll();
   }
 
   async applyPendingProducts(productIds = []) {
     const appliedProducts = this.pendingProducts.filter((product) => productIds.includes(product.id));
-    AppState.create(appliedProducts);
+    DataBase.create(appliedProducts);
     this._clearPendingProducts();
 
-    return await AppState.getAll();
+    return await DataBase.getAll();
   }
 
   async addCartProduct(productId = '') {
-    const allProducts = await AppState.getAll();
+    const allProducts = await DataBase.getAll();
 
     if (allProducts.length) {
       const targetProduct = allProducts.find((product) => product.id === productId);
@@ -53,11 +61,11 @@ export class Api {
   }
 
   async removeProductById(productId = '') {
-    return await AppState.removeById(productId);
+    return await DataBase.removeById(productId);
   }
 
   async updateProducts(editedProducts = []) {
-    return await AppState.update(editedProducts);
+    return await DataBase.update(editedProducts);
   }
 
   getPendingProducts() {
@@ -79,7 +87,7 @@ export class Api {
   }
 
   getProductById(productId = '') {
-    return AppState.getById(productId);
+    return DataBase.getById(productId);
   }
 
   getCartProducts() {

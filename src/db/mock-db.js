@@ -3,7 +3,7 @@ import { FSPath } from '../common/enums/api.js';
 
 const fileSystem = fsPromise;
 
-const AppState = {
+const DataBase = {
   products: [],
 
   _parseSafe() {
@@ -75,4 +75,4 @@ const AppState = {
   },
 };
 
-export { AppState };
+export { DataBase };

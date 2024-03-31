@@ -1,4 +1,5 @@
-export const PORT = 3000;
+export const SSR_PORT = 3000;
+export const SERVICE_PORT = 3030;
 export const REDIRECT_TIME = 2000;
 export const HeaderName = {
   CONTENT_TYPE: 'Content-Type',
