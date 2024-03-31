@@ -27,6 +27,7 @@ export const initShopRouter = (settings = {}) => {
     // вторым аргументом передаём объект с данными, которые будут доступны в шаблоне
     // по соотв. названиям полей
     // !это дефолтный флоу работы с шаблонами
+    await api.experimental_getAllProducts();
 
     const products = await api.getAllProducts();
     const cartProductQuantity = api.getCartProductsQuantity();
