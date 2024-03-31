@@ -1,12 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { AppRoute, SSR_PORT } from '../common/enums/api.js';
-import { sequelize } from '../db/db.js';
 import path from 'path';
 import * as url from 'url';
 import { Api } from './api.js';
 import cookieParser from 'cookie-parser';
-import { defineModels } from '../db/define-models.js';
 import { initMainRouter } from './routes/main.js';
 import { StatusCodes } from 'http-status-codes';
 
