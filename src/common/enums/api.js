@@ -15,6 +15,7 @@ export const FSPath = {
 };
 
 export const AppRoute = {
+  API_ROOT: '/api',
   ROOT: '/',
   PRODUCT_ID: '/:id',
   CHECK: '/check',
@@ -42,15 +43,4 @@ export const AdminRoute = {
 export const AppSubRoute = {
   ADMIN: '/admin',
   PRODUCT_DETAILS: '/product-details',
-};
-
-export const AppMethod = {
-  POST: 'POST',
-  GET: 'GET',
-};
-
-export const AppCodes = {
-  REDIRECT: 302,
-  NOT_FOUND: 404,
-  SUCCESS: 200,
 };

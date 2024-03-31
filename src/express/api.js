@@ -12,9 +12,8 @@ export class Api {
 
   async experimental_getAllProducts() {
     const response = await fetch(`http://localhost:${SERVICE_PORT}/api/`, { method: 'GET' });
-    const result = await response.json();
 
-    console.log('API RESPONSE', result);
+    return await response.json();
   }
 
   async getAllProducts() {

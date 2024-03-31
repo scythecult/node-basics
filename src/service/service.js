@@ -1,6 +1,6 @@
 import express from 'express';
 import { createServiceRoutes } from '../service/api/index.js';
-import { SERVICE_PORT } from '../common/enums/api.js';
+import { AppRoute, SERVICE_PORT } from '../common/enums/api.js';
 import { sequelize } from '../db/db.js';
 
 try {
@@ -18,5 +18,5 @@ const serviceRoutes = await createServiceRoutes();
 
 app.use(express.json());
 
-app.use('/api', serviceRoutes);
+app.use(AppRoute.API_ROOT, serviceRoutes);
 app.listen(SERVICE_PORT);
