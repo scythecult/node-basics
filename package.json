@@ -1,7 +1,10 @@
 {
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start-servers": "concurrently \"npm run start-api\" \"npm run start-ssr\"",
+    "start-ssr": "nodemon --import dotenv/config ./src/express/server.js",
+    "start-api": "node --import dotenv/config ./src/service/service.js",
+    "start": "npm run start-servers"
   },
   "nodemonConfig": {
     "ignore": [
@@ -11,8 +14,15 @@
   "dependencies": {
     "@types/node": "^20.11.5",
     "body-parser": "^1.20.2",
+    "concurrently": "^8.2.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
-    "pug": "^3.0.2"
+    "http-status-codes": "^2.3.0",
+    "mysql2": "^3.9.2",
+    "pug": "^3.0.2",
+    "save-dev": "^0.0.1-security",
+    "sequelize": "^6.37.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
