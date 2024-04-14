@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { AdminRoute, AppRoute, AppSubRoute } from '../../common/enums/api.js';
+import { AdminRoute, AppRoute } from '../../common/enums/api.js';
 import { StatusCodes } from 'http-status-codes';
 import { Product } from '../models/product.js';
+import { RouteSettings } from '../types/common.js';
 
-export const initAdminRouter = (settings = {}) => {
-  const adminRoutes = new Router();
+export const initAdminRouter = (settings: RouteSettings) => {
+  const adminRoutes = Router();
   const { api } = settings;
   // можно добавить часть пути, по которому будет работать основной маршрут
 

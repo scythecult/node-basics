@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { AppRoute } from '../../common/enums/api.js';
-import { CookieName, CookieOptions } from '../../common/enums/cookies.js';
+import { CookieName, CookieOption } from '../../common/enums/cookies.js';
+import { RouteSettings } from '../types/common.js';
 
 // api? которая использует внутри себя fetch и ходит по маршрутам
 //
 
-export const initShopRouter = (settings = {}) => {
-  const shopRoutes = new Router();
+export const initShopRouter = (settings: RouteSettings) => {
+  const shopRoutes = Router();
   const { api } = settings;
 
   // будет работать в www.check.com/something
@@ -17,7 +18,7 @@ export const initShopRouter = (settings = {}) => {
     const isKnownUser = !!cookies[CookieName.TRACK_FLAG];
 
     if (!isKnownUser) {
-      res.cookie(CookieName.TRACK_FLAG, 'check', CookieOptions);
+      res.cookie(CookieName.TRACK_FLAG, 'check', CookieOption);
     }
     console.log('client cookies', cookies);
     // передаёт в ответе файл html, по определённому пути ФС

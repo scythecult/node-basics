@@ -1,7 +1,18 @@
 import { SERVICE_PORT } from '../common/enums/api.js';
 import { DataBase } from '../db/mock-db.js';
+import type { Product, Promocode } from './types/common.js';
 
-export class Api {
+interface ApiType {
+  applyPendingProducts: (productIds: string[]) => void;
+  createPendingProduct: (newProduct: Product) => void;
+}
+
+export class Api implements ApiType {
+  pendingProducts: Product[];
+  cartProducts: Product[];
+  totalPrice: number;
+  userPromocode: string;
+  seasonPromocode: Promocode;
   constructor() {
     this.pendingProducts = [];
     this.cartProducts = [];
@@ -21,7 +32,7 @@ export class Api {
   }
 
   // далее такая бизнес логика должна переехать в ssr-часть
-  async applyPendingProducts(productIds = []) {
+  async applyPendingProducts(productIds: string[] = []) {
     const appliedProducts = this.pendingProducts.filter((product) => productIds.includes(product.id));
     DataBase.create(appliedProducts);
     this._clearPendingProducts();
@@ -64,7 +75,7 @@ export class Api {
     return await DataBase.removeById(productId);
   }
 
-  async updateProducts(editedProducts = []) {
+  async updateProducts(editedProducts: Product[] = []) {
     return await DataBase.update(editedProducts);
   }
 
@@ -72,7 +83,7 @@ export class Api {
     return this.pendingProducts;
   }
 
-  createPendingProduct(newProduct = {}) {
+  createPendingProduct(newProduct: Product) {
     this.pendingProducts.push(newProduct);
   }
 
@@ -103,7 +114,7 @@ export class Api {
   getTotalCartPrice() {
     const { value, discount } = this.seasonPromocode;
     const result = this.cartProducts.reduce(
-      (initial, current) => (initial += current.quantity * current.price.replace(/\D+/g, '')),
+      (initial, current) => (initial += current.quantity * +current.price.replace(/\D+/g, '')),
       0
     );
 
@@ -123,7 +134,7 @@ export class Api {
   }
 
   removeCartProductById(productId = '') {
-    this.cartProducts = this.cartProducts.reduce((initial, cartProduct) => {
+    this.cartProducts = this.cartProducts.reduce<Product[]>((initial, cartProduct) => {
       if (cartProduct.id === productId && cartProduct.quantity > 1) {
         cartProduct.quantity--;
       } else if (cartProduct.quantity <= 1) {

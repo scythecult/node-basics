@@ -1,20 +1,37 @@
 import fsPromise from 'node:fs/promises';
 import { FSPath } from '../common/enums/api.js';
+import { Product } from '../express/types/common.js';
 
 const fileSystem = fsPromise;
 
-const DataBase = {
+type DB = {
+  products: Product[];
+  _parseSafe: () => Product[];
+  _readProductReport: () => Promise<Product[]>;
+  _writeProductReport: () => void;
+  getAll: () => Promise<Product[]>;
+  getById: (productId: string) => Product | object;
+  create: (newProducts: Product[]) => Promise<Product[]>;
+  removeById: (productId: string) => Promise<Product[]>;
+  update: (editedProducts: Product[]) => Promise<Product[]>;
+};
+
+const DataBase: DB = {
   products: [],
 
   _parseSafe() {
-    return this.products.length ? JSON.parse(this.products) : [];
+    return this.products.length ? JSON.parse(`${this.products}`) : [];
   },
 
   async _readProductReport() {
     try {
-      this.products = await fileSystem.readFile(`${FSPath.STORED}/products.json`);
+      const result = await fileSystem.readFile(`${FSPath.STORED}/products.json`, { encoding: 'utf-8' });
+
+      this.products = JSON.parse(result);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
 
     return this._parseSafe();
@@ -24,7 +41,9 @@ const DataBase = {
     try {
       await fileSystem.writeFile(`${FSPath.STORED}/products.json`, JSON.stringify(this.products));
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
