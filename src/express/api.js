@@ -20,6 +20,7 @@ export class Api {
     return await DataBase.getAll();
   }
 
+  // далее такая бизнес логика должна переехать в ssr-часть
   async applyPendingProducts(productIds = []) {
     const appliedProducts = this.pendingProducts.filter((product) => productIds.includes(product.id));
     DataBase.create(appliedProducts);
