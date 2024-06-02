@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { AppRoute } from '../../common/enums/api.js';
 import { StatusCodes } from 'http-status-codes';
+import { RouteSettings } from '../types/common.js';
 
-export const initCartRouter = (settings = {}) => {
-  const cartRoutes = new Router();
+export const initCartRouter = (settings: RouteSettings) => {
+  const cartRoutes = Router();
   const { api } = settings;
 
   cartRoutes.get(AppRoute.ROOT, (req, res) => {

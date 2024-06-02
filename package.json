@@ -1,8 +1,9 @@
 {
   "type": "module",
+  "main": "dist/index.js",
   "scripts": {
     "start-servers": "concurrently \"npm run start-api\" \"npm run start-ssr\"",
-    "start-ssr": "nodemon --import dotenv/config ./src/express/server.js",
+    "start-ssr": "nodemon --import dotenv/config ./src/express/server.ts",
     "start-api": "node --import dotenv/config ./src/service/service.js",
     "start": "npm run start-servers"
   },
@@ -12,7 +13,6 @@
     ]
   },
   "dependencies": {
-    "@types/node": "^20.11.5",
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
@@ -21,10 +21,15 @@
     "http-status-codes": "^2.3.0",
     "mysql2": "^3.9.2",
     "pug": "^3.0.2",
-    "save-dev": "^0.0.1-security",
     "sequelize": "^6.37.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "@types/sequelize": "^4.28.20",
+    "nodemon": "^3.0.3",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.5"
   }
 }

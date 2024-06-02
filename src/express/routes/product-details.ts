@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import { AppRoute } from '../../common/enums/api.js';
+import { RouteSettings } from '../types/common.js';
 
-export const initProductDetailsRouter = (settings = {}) => {
-  const productDetailsRoute = new Router();
+export const initProductDetailsRouter = (settings: RouteSettings) => {
+  const productDetailsRoute = Router();
   const { api } = settings;
 
   productDetailsRoute.get(AppRoute.PRODUCT_ID, (req, res) => {
